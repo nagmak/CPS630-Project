@@ -1,3 +1,21 @@
+<?php
+    include 'db-connect.php';
+    $conn = OpenCon();
+    echo "Connected Successfully";
+
+    $sql = "SELECT * FROM attractions";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        // output data of each row
+        while($row = $result->fetch_assoc()) {
+            echo "ID: " . $row["ID"]. ", Name: " . $row["Name"]. ", Country: " . $row["Country"]. ", Continent: " . $row["Continent"]. ", Info: " . $row["Info"]. ", Popular: " . $row["Popular"]."<br>";
+        }
+    } else {
+        echo "0 results";
+    }
+
+    CloseCon($conn);
+?>
 <!doctype html>
 <html lang="en">
   <head>

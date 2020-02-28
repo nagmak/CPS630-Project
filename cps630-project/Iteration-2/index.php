@@ -1,18 +1,33 @@
 <?php
     include 'db-connect.php';
     $conn = OpenCon();
-    echo "Connected Successfully";
-
+    //echo "Connected Successfully";
+    $attractions = [];
+    $images = [];
     $sql = "SELECT * FROM attractions";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         // output data of each row
         while($row = $result->fetch_assoc()) {
-            echo "ID: " . $row["ID"]. ", Name: " . $row["Name"]. ", Country: " . $row["Country"]. ", Continent: " . $row["Continent"]. ", Info: " . $row["Info"]. ", Popular: " . $row["Popular"]."<br>";
+            array_push($attractions, $row);
+            //echo "ID: " . $row["ID"]. ", Name: " . $row["Name"]. ", Country: " . $row["Country"]. ", Continent: " . $row["Continent"]. ", Info: " . $row["Info"]. ", Popular: " . $row["Popular"]."<br>";
         }
     } else {
         echo "0 results";
     }
+    $sql = "SELECT * FROM images";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        // output data of each row
+        while($row = $result->fetch_assoc()) {
+            array_push($images, $row);
+            //echo "ID: " . $row["ID"]. ", Name: " . $row["Name"]. ", Attraction: " . $row["Attraction"]. ", Image URL: " . $row["ImageURL"]. "<br>";
+        }
+    } else {
+        echo "0 results";
+    }
+    echo $attractions;
+    echo $images;
 
     CloseCon($conn);
 ?>

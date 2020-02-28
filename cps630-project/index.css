@@ -15,3 +15,14 @@
     margin-left: .1rem;
     margin-right: .1rem;
 }
+
+#main-image {
+    text-align:center;
+    margin: auto;
+}
+#main-image a{
+    margin:0px 20px;
+    display:inline-block;
+    text-decoration:none;
+    color:black;
+}

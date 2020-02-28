@@ -110,3 +110,17 @@ function setBottomImages(imgID) {
     }
   }
 }
+
+$('#main-img1 a').click( function(e) {
+  /*your_code_here;*/ 
+  window.location.href = './read-more.html';
+});
+
+$('#main-img2 a').click( function(e) {
+  /*your_code_here;*/ 
+  window.location.href = './read-more.html';
+  $(window).on('load', function () {
+    setMainImage("main-img2");
+  });
+});
+

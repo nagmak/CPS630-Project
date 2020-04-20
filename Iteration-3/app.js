@@ -3,23 +3,23 @@ var app = angular.module('travelApp', ['ngRoute']);
 app.config(function($routeProvider) {
   $routeProvider
   .when('/', {
-      templateUrl : 'home.html',
+      templateUrl : 'view/home.html',
       controller : 'TravelAppDropdownController'
   })
   .when('/readmore', {
-      templateUrl : 'readMore.html',
+      templateUrl : 'view/readMore.html',
       controller : 'ReadMoreController'
   })
   .when('/aboutus', {
-    templateUrl : 'aboutus.html',
+    templateUrl : 'view/aboutus.html',
     controller : 'AboutUsController'
   })
   .when('/contactus', {
-    templateUrl : 'contactus.html',
+    templateUrl : 'view/contactus.html',
     controller : 'ContactUsController'
   })
   .when('/shopping', {
-      templateUrl : 'shopping.html',
+      templateUrl : 'view/shopping.html',
       controller : 'ShoppingController'
   })
   .otherwise({

@@ -228,6 +228,40 @@ app.controller('ShoppingController', function($scope, $rootScope, checkAuth) {
   
   // console.log($scope.check);
 
+  $scope.package = {
+    'Toronto': {
+      'start': '11/27/2020',
+      'duration': '1 week',
+      'airfare': 200,
+      'tourid': 416647509,
+      'total': 1000,
+      'location': 'toronto'
+    },
+    'New York': {
+      'start': '06/20/2020',
+      'duration': '2 Weeks',
+      'airfare': 350,
+      'tourid': 893205234,
+      'total': 1500,
+      'location': 'newyork'
+    }
+  }
+
+  $scope.selectedItem;
+  $scope.selectedPkg = function (item) {
+      $scope.selectedItem = item;
+      console.log($scope.selectedItem);
+  }
+  
+  $scope.update = function() {
+    console.log($scope.shoppingform.travelers.$viewValue);
+    $scope.totalPrice = 0;
+    if ($scope.shoppingform.travelers !== undefined && $scope.selectedItem.location === 'newyork') {
+        $scope.totalPrice = $scope.shoppingform.travelers.$viewValue * $scope.package['New York'].total;
+    } else if ($scope.shoppingform.travelers !== undefined && $scope.selectedItem.location === 'toronto') {
+      $scope.totalPrice = $scope.shoppingform.travelers.$viewValue * $scope.package['Toronto'].total;
+    }
+  }
 });
 app.controller('AboutUsController', function($scope, $rootScope, checkAuth) {
   // $rootScope.session = window.localStorage.getItem("SessionId");

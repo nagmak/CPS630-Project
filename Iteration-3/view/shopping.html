@@ -1,45 +1,30 @@
     <ul>
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Preposed Travel Plans
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <div>Preposed Travel Plans
+          <!-- Plans -->
+              <select id="package" ng-model="selectedItem" ng-model="package" ng-options="places for (places, values) in package" ng-change="selectedPkg(selectedItem)">
+              </select>
 
-          <!-- Plan Toronto -->
-          <div class="dropdown-submenu">
-            <a class="dropdown-item dropdown-toggle" href="#">Toronto</a>  
-            <ul class="dropdown-menu">
-                <h5>Toronto Package</h5>
-                <li class="dropdown-item">Start Date: 11/27/2020</li>
-                <li class="dropdown-item">Duration: 1 Week</li>
-                <li class="dropdown-item">Air fare: $200</li>
-                <li class="dropdown-item">Tour ID#: 416647509</li>
-                <li class="dropdown-item">Total Price: $1000</li>
-                <a class="dropdown-item package-item" style="font-weight: bolder;" id="Toronto" href="#">Select Package</a>  
-            </ul>
-        
-          <!-- Plan New York -->
-            <a class="dropdown-item dropdown-toggle" href="#">New York</a>
-            <ul class="dropdown-menu">
-              <h5>New York Package</h5>
-              <li class="dropdown-item">Start Date: 06/20/2020</li>
-              <li class="dropdown-item">Duration: 2 Weeks</li>
-              <li class="dropdown-item">Air fare: $350</li>
-              <li class="dropdown-item">Tour ID#: 893205234</li>
-              <li class="dropdown-item">Total Price: $1500</li>
-              <a class="dropdown-item package-item" style="font-weight: bolder;" id="New_York" href="#">Select Package</a>  
-            </ul>
+              <ul ng-if="selectedItem">
+                <li class="dropdown-item">Start Date: {{selectedItem.start}}</li>
+                <li class="dropdown-item">Duration: {{selectedItem.duration}}</li>
+                <li class="dropdown-item">Air fare: ${{selectedItem.airfare}}</li>
+                <li class="dropdown-item">Tour ID#: {{selectedItem.tourid}}</li>
+                <li class="dropdown-item">Total Price: ${{selectedItem.total}}</li>
+              </ul>
+
+
         </div>
     </ul>
     
-    <form style="float: right;">
-      <table id="New-York-Form" style="display: none;">
+    <form style="float: right; margin-right: 400px;" name="shoppingform" ng-submit="update()">
+      <table id="New-York-Form" ng-if="selectedItem.location === 'newyork'">
         <th>
           New York Package
         </th>
         <tr> 
           <td class="label">Number Of Travelers:</td>
           <td>
-            <input class="travelers" name="travelers" type="number" />
+            <input class="travelers" name="travelers" ng-model="travelers" type="number" />
           </td>
         </tr>
 
@@ -52,14 +37,14 @@
         </tr>
       </table>
 
-      <table id="Toronto-Form" style="display: none;">
+      <table id="Toronto-Form" ng-if="selectedItem.location === 'toronto'">
         <th>
           Toronto Package
         </th>
         <tr>
           <td  class="label">Number Of Travelers:</td>
           <td>
-            <input class="travelers" name="travelers" type="number" />
+            <input class="travelers" name="travelers" ng-model="travelers"  type="number" />
           </td>
         </tr>
 
@@ -70,5 +55,7 @@
           </td>
         </tr>
       </table>
-      <h5 id="grand-total">Grand Total(w/ tax): $0</h5>
+      <button type="submit" class="btn btn-success btn-simple btn-round btn-block" ng-disabled="shoppingform.$invalid">Submit</button>
+      <h5 id="grand-total">Grand Total(w/ tax): ${{totalPrice}}</h5>
+
     </form>

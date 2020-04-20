@@ -60,6 +60,10 @@ app.config(function($routeProvider, $locationProvider) {
       templateUrl : 'view/shopping.html',
       controller : 'ShoppingController'
   })
+  .when('/admin', {
+    templateUrl : 'view/admin.html',
+    controller : 'AdminController'
+  })
   .otherwise({
       redirectTo: '/login'
   });
@@ -97,13 +101,13 @@ app.factory("checkAuth", function($location,$rootScope){
 app.controller('LoginController', function($scope,$location,$rootScope,$sce){
   $rootScope.isLoggedIn = false;
   $scope.login = function(){		
-      if ($scope.loginform.$valid) {
-        if($scope.email == 'admin@gmail.com' && $scope.pass == 'admin123')
+      if ($scope.loginform) {
+        if($scope.username == 'admin@gmail.com' && $scope.password == 'admin123')
         {
           alert('login successful');
           $rootScope.isLoggedIn = true;
-          $scope.UserId = $scope.email;
-          $scope.session = $scope.email;
+          $scope.UserId = $scope.username;
+          $scope.session = $scope.username;
           $scope.sessionName = 'admin';
           window.localStorage.setItem("SessionId", $scope.session);
           window.localStorage.setItem("SessionName", $scope.sessionName);

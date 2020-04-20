@@ -1,46 +1,153 @@
 
-	
-			<div class="container">
-						
-                <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-12">
-                    <div class="login clearfix">
-                        <h4>Login</h4>    
-                        <form name="loginform" ng-submit="login()">
-                            <div class="content">
-                                <div class="input-group form-group-no-border input-lg">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-envelope"></i>
-                                    </span>
-                                    <input type="email" name="email" ng-model="email" class="form-control" placeholder="Email..."  required/>
-                                </div>
-                                <div class="alert alert-danger" ng-show="loginform.email.$dirty && loginform.email.$invalid">
-                                      <span ng-show="loginform.email.$error.required">Email is required.</span>
-                                      <span ng-show="loginform.email.$error.email">Invalid email address.</span>
-                                  </div>
-                                <div class="input-group form-group-no-border input-lg">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-lock"></i>
-                                    </span>
-                                    <input type="password" name="pass" ng-model="pass" placeholder="Password..." ng-minlength="8" ng-maxlength="15" class="form-control" required/>
-                                </div>
-                                <div class="alert alert-danger" ng-show="loginform.pass.$dirty && loginform.pass.$invalid">
-                                      <span ng-show="loginform.pass.$error.required">Password is required.</span>
-                                    <span ng-if="!loginform.pass.$valid">
-                                        <span ng-show="loginform.pass.$error.minlength">The length is too short.</span>
-                                        <span ng-show="loginform.pass.$error.maxlength">The length is too long.</span>
-                                    </span>
-                                  </div>
-                                <span class="badge" ng-bind-html="loginMessage"></span>
-                            </div>
-                            <div class="footer col-xs-12 text-center">
-                                <button type="submit" class="btn btn-success btn-simple btn-round btn-block" ng-disabled="loginform.$invalid">Log In</button>
-                            </div>
-                            <div class="col-xs-12">
-                                <h6 class="text-center">
-                                    <a href="#/register" class="link">Register New Account</a>
-                                </h6>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+<head>
+    <meta charset="utf-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <style>
+        * {
+        box-sizing: border-box;
+        font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen, ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial, sans-serif;
+        font-size: 16px;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        }
+        body {
+            background-color: #435165;
+        }
+        .login {
+            width: 400px;
+            background-color: #ffffff;
+            box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
+            margin: 100px auto;
+        }
+        .login h1 {
+            text-align: center;
+            color: #5b6574;
+            font-size: 24px;
+            padding: 20px 0 20px 0;
+            border-bottom: 1px solid #dee0e4;
+        }
+        .login form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding-top: 20px;
+        }
+        .login form label {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            background-color: #3274d6;
+            color: #ffffff;
+        }
+        .login form input[type="password"], .login form input[type="email"] {
+            width: 310px;
+            height: 50px;
+            border: 1px solid #dee0e4;
+            margin-bottom: 20px;
+            padding: 0 15px;
+        }
+        #submit {
+            text-align: center;
+            width: 90%;
+            padding: 15px;
+            margin-top: 20px;
+            background-color: #3274d6;
+            border: 0;
+            cursor: pointer;
+            font-weight: bold;
+            color: #ffffff;
+            transition: background-color 0.2s;
+        }
+        #submit:hover {
+            background-color: #2868c7;
+            transition: background-color 0.2s;
+        }
+        .register {
+            text-align: center;
+            width: 400px;
+            font-weight: bold;
+            background-color: #fff;
+            color: #7d7c7d;
+            /* margin: 100px auto; */
+            padding: 0 0 25px 0;
+            margin: 0;
+        }
+
+        .register p {
+            padding: 6px 0;
+            margin: 0;
+        }
+        .register a {
+            color: #7d7c7d;
+        }
+
+        #warning {
+            display:none;
+            text-align: center;
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            padding:5px;
+            margin:10px;
+            border-left:10px;
+            border-right:10px;
+            border-left: 10px solid  #721c24;
+        }
+        .fancy {
+            line-height: .5;
+            text-align: center;
+            display: inline-block;
+            margin: 24px 0 !important;
+        }
+        .fancy span {
+            display: inline-block;
+            position: relative;
+            font-size: 20px;
+        }
+        .fancy span:before,
+        .fancy span:after {
+            content: "";
+            position: absolute;
+            height: 0px;
+            border-bottom: 2px solid rgb(124, 124, 124);
+            top: 5px;
+            width: 150px;
+        }
+        .fancy span:before {
+            right: 100%;
+            margin-right: 15px;
+        }
+        .fancy span:after {
+            left: 100%;
+            margin-left: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login">
+        <h1>Login</h1>
+
+        <p id="warning" ><i class="fas fa-exclamation-triangle"></i></p>
+        <form name="loginform" ng-submit="login()">
+            <label for="username">
+                <i class="fas fa-user"></i>
+            </label>
+            <input type="email" name="username" ng-model="username" placeholder="username@mail.com" id="username" required>
+            
+            <label for="password">
+                <i class="fas fa-lock"></i>
+            </label>
+            <input type="password" name="password" ng-model="password" placeholder="Password" id="password" required>
+            
+            <button type="submit" id="submit" title="Submit" >Login</button>
+        </form>
+        <div class="register">
+            <p class="fancy"><span>OR</span></p>
+            <p>Don't have an account? <a href="./register">Register Here</a></p>
+            <!-- <p><a href="./passreset">Forgot your password?</a></p> -->
+        </div>
     </div>
+</body>

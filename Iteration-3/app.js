@@ -47,7 +47,27 @@ app.factory('readMoreService', function() {
 });
 
 app.controller('TravelAppDropdownController', function($scope, readMoreService) {
-    $scope.popPlaces = ['Toronto', 'New York', 'Madrid', 'Mumbai', 'Singapore'];
+
+
+    $scope.popPlaces = [
+      {
+        "city": 'Toronto'   
+      },
+      {
+        "city": 'New York'
+      }, 
+      {
+        "city": 'Madrid'
+      },
+      {
+        "city": 'Mumbai'
+      },
+      {
+        "city": 'Singapore'
+      },
+    ];
+  
+    // $scope.popPlaces = ['Toronto', 'New York', 'Madrid', 'Mumbai', 'Singapore'];
     $scope.continents = {
       'Asia': {
         'Singapore': ['Singapore'],

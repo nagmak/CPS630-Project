@@ -343,14 +343,11 @@
                     <option ng-repeat="attraction in attractions" value='{{attraction}}'>{{attraction}}</option>
                 </select>
                 </li>
-                <!-- <li class="nav-item dropdown" style="list-style-type: none; text-decoration: none; margin-left: 48px;">Popular Places
-                    <select id="place" ng-model="popPlaces" ng-options="place for place in popPlaces" ng-change="selectedLoc(place)">
+                <li class="nav-item dropdown" style="list-style-type: none; text-decoration: none; margin-left: 48px;">Popular Places
+                    <select id="places" ng-model="selected" ng-options="place.city for place in popPlaces" ng-change="selectedLoc(selected.city)">
                         <option></option>
-                    </select> -->
-                    <!-- <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li ng-repeat="i in popPlaces"><a ng-click="selectedLoc(i)">{{i}}</a></li>
-                    </ul> -->
-                <!-- </li> -->
+                    </select>
+                 </li>
             </ul>
             </div>
           </nav>

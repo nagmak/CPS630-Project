@@ -76,13 +76,18 @@ run.$inject = ['$rootScope', '$location'];
       $rootScope.session = window.localStorage.getItem("SessionId");
       $rootScope.userName = window.localStorage.getItem("SessionName");
       $rootScope.isLoggedIn = window.localStorage.getItem("isLoggedIn");
+      $rootScope.isAdmin = window.localStorage.getItem("isAdmin");
     
       $rootScope.$on('$locationChangeStart', function (event, next, current) {
           // redirect to login page if not logged in and trying to access a restricted page
           var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1;
+          var restrictedPage2 = $.inArray($location.path(), ['/admin']) != -1;
           var loggedIn = $rootScope.isLoggedIn;
+          var Admin = $rootScope.isAdmin;
           if (restrictedPage && !loggedIn) {
               $location.path('/login');
+          }else if (restrictedPage2 && !Admin) {
+            $location.path('/');
           }
       });
   }
@@ -100,28 +105,52 @@ app.factory("checkAuth", function($location,$rootScope){
 
 app.controller('LoginController', function($scope,$location,$rootScope,$sce){
   $rootScope.isLoggedIn = false;
+  $rootScope.isAdmin =false;
   $scope.login = function(){		
       if ($scope.loginform) {
-        if($scope.username == 'admin@gmail.com' && $scope.password == 'admin123')
-        {
-          alert('login successful');
-          $rootScope.isLoggedIn = true;
-          $scope.UserId = $scope.username;
-          $scope.session = $scope.username;
-          $scope.sessionName = 'admin';
-          window.localStorage.setItem("SessionId", $scope.session);
-          window.localStorage.setItem("SessionName", $scope.sessionName);
-          window.localStorage.setItem("isLoggedIn", $scope.isLoggedIn);
-          console.log(window.localStorage);
-          //userDetails.SessionId = $scope.session;
-          $location.path('/');
-
-        }
-        else{
+        var username = $scope.username;
+        var password = $scope.password;
+        if (username && password) {
+              connection.query('SELECT * FROM `users` WHERE `username` = ? ', [username], function(error, results, fields) {
+                  if (results.length > 0) {
+                      if(password == results[0].password){
+                          if(results[0].authorised == '1'){
+                            alert('login successful');
+                            $rootScope.isAdmin = results[0].admin;
+                            $rootScope.isLoggedIn = true;
+                            $scope.UserId = $scope.username;
+                            $scope.session = $scope.username;
+                            $scope.sessionName = 'admin';
+                            window.localStorage.setItem("SessionId", $scope.session);
+                            window.localStorage.setItem("SessionName", $scope.sessionName);
+                            window.localStorage.setItem("isLoggedIn", $scope.isLoggedIn);
+                            console.log(window.localStorage);
+                            //userDetails.SessionId = $scope.session;
+                            $location.path('/');
+                          }else{
+                            $rootScope.isLoggedIn = false;
+                            window.localStorage.setItem("isLoggedIn", $rootScope.isLoggedIn);
+                            $scope.warning = $sce.trustAsHtml('<i class="fa fa-exclamation-triangle"></i> account is not authorised');
+                            console.log($scope.warning);
+                          }
+                      } else {
+                        $rootScope.isLoggedIn = false;
+                        window.localStorage.setItem("isLoggedIn", $rootScope.isLoggedIn);
+                        $scope.warning = $sce.trustAsHtml('<i class="fa fa-exclamation-triangle"></i> check your email id and password');
+                        console.log($scope.warning);
+                      }
+                  } else {
+                    $rootScope.isLoggedIn = false;
+                    window.localStorage.setItem("isLoggedIn", $rootScope.isLoggedIn);
+                    $scope.warning = $sce.trustAsHtml('<i class="fa fa-exclamation-triangle"></i> check your email id and password');
+                    console.log($scope.warning);
+                  }			
+              });
+        } else {
           $rootScope.isLoggedIn = false;
           window.localStorage.setItem("isLoggedIn", $rootScope.isLoggedIn);
-          $scope.loginMessage = $sce.trustAsHtml('<i class="fa fa-exclamation-triangle"></i> check your email id and password');
-          console.log($scope.loginMessage);
+          $scope.warning = $sce.trustAsHtml('<i class="fa fa-exclamation-triangle"></i> please enter a username and password');
+          console.log($scope.warning);
         }
       }
       
@@ -142,6 +171,25 @@ app.controller('RegisterController', function($scope,$location,$rootScope,$sce){
         $location.path('/login');
       }
     }
+  }
+  app.controller('AdminController', function($scope,$location,$rootScope,$sce){
+    $scope.query = function() {
+      var sql = $scope.query;
+      console.log(sql);
+      connection.query(sql, function(error, results, fields) {
+          if(error) {
+            $scope.warning = $sce.trustAsHtml('<i class="fa fa-exclamation-triangle"></i> incorrect query.');
+            console.log($scope.warning);
+              // res.redirect('/register.html');
+          } else {
+              // console.log(Buffer.from(metadata, 'base64').toString('ascii'));
+              // console.log(Buffer.from(template, 'base64').toString('ascii'));
+              //alert('User Successfully Registered, please login.');
+              $scope.warning = $sce.trustAsHtml('<i class="fa fa-exclamation-triangle"></i> query submitted.');
+              console.log($scope.warning);
+          }			
+          // res.end();
+      });
   }
 
   $rootScope.isLoggedIn = false;

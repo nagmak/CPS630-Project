@@ -1,139 +1,116 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title>admin</title>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-        <style>
-        * {
-        box-sizing: border-box;
-        font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen, ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial, sans-serif;
-        font-size: 16px;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        }
-        body {
-            background-color: #435165;
-        }
-        .admin {
-            width: 75%;
-            background-color: #ffffff;
-            box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
-            margin: 100px auto;
-        }
-        .admin h1 {
-            text-align: center;
-            color: #5b6574;
-            font-size: 24px;
-            padding: 20px 0 20px 0;
-            border-bottom: 1px solid #dee0e4;
-        }
-        .admin form {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            padding-top: 20px;
-        }
-        .admin form label {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 50px;
-            height: 50px;
-            background-color: #3274d6;
-            color: #ffffff;
-        }
-        .admin form input[type="text"] {
-            width: 75%;
-            height: 50px;
-            border: 1px solid #dee0e4;
-            margin-bottom: 20px;
-            padding: 0 15px;
-        }
-        #submit {
-            text-align: center;
-            width: 100%;
-            padding: 15px;
-            margin-top: 20px;
-            background-color: #3274d6;
-            border: 0;
-            cursor: pointer;
-            font-weight: bold;
-            color: #ffffff;
-            transition: background-color 0.2s;
-        }
-        #submit:hover {
-            background-color: #2868c7;
-            transition: background-color 0.2s;
-        }
-        .home{
-            text-align: center;
-            width: 400px;
-            background-color: #435165;
-            margin: 100px auto;
-        }
-        .home a{
-            font-weight: bold;
-            color: #ffffff;
-        }
-        #warning {
-            display:none;
-            text-align: center;
-            color: #721c24;
-            background-color: #f8d7da;
-            margin: 10px;
-            padding:5px;
-            border-left: 10px solid  #721c24;
-        }
-        #caution {
-            display:none;
-            text-align: center;
-            color: #856404;
-            background-color: #fff3cd;
-            margin: 10px;
-            padding:5px;
-            border-left: 10px solid  #ffeeba;
-        }
-        </style>
-	</head>
-	<body>
-		<div class="admin">
-			<h1>Input MySql Query</h1>
-            <p id="warning"></p>
-            <p id="caution"></p>
-            <form action="/query" method="post">
-                
-				<label for="query">
-					<i class="fas fa-user"></i>
-				</label>
-                <input type="text" name="query" placeholder="put query here ex: INSERT INTO attractions SET `place`= 'CN Tower', `city`='Toronto', `Country`='Canada'; ....." id="query" required>
-                <a id="submit" title="Submit" href="javascript:void(0)" onclick="authorize();">Submit</a>
-			</form>
-		</div>
-        <div class="home">
-            <a href="./home.html">Back to home</a>
-        </div>
-	</body>
-</html>
 
-<script>
-    function authorize(){
-        if(document.getElementById('query').value){
-            var query = document.getElementById('query').value;
-            $.ajax({
-                type: "POST",
-                url: "/query",
-                async: true,
-                data: { query: query},
-                success: function( request ) {
-                    document.getElementById('warning').style.display="block";
-                    document.getElementById('warning').innerHTML = '<i class="fas fa-exclamation-triangle"></i>   '+requst;
-                }
-            });
-        }else{
-            document.getElementById('warning').style.display="block";
-            document.getElementById('warning').innerHTML = '<i class="fas fa-exclamation-triangle"></i> Query required for submition.';
-        }
+<head>
+    <meta charset="utf-8">
+    <title>admin</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <style>
+    * {
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen, ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial, sans-serif;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     }
-</script>
+    body {
+        background-color: #435165;
+    }
+    .admin {
+        width: 75%;
+        background-color: #ffffff;
+        box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
+        margin: 100px auto;
+    }
+    .admin h1 {
+        text-align: center;
+        color: #5b6574;
+        font-size: 24px;
+        padding: 20px 0 20px 0;
+        border-bottom: 1px solid #dee0e4;
+    }
+    .admin form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding-top: 20px;
+    }
+    .admin form label {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+        height: 50px;
+        background-color: #3274d6;
+        color: #ffffff;
+    }
+    .admin form input[type="text"] {
+        width: 75%;
+        height: 50px;
+        border: 1px solid #dee0e4;
+        margin-bottom: 20px;
+        padding: 0 15px;
+    }
+    #submit {
+        text-align: center;
+        width: 100%;
+        padding: 15px;
+        margin-top: 20px;
+        background-color: #3274d6;
+        border: 0;
+        cursor: pointer;
+        font-weight: bold;
+        color: #ffffff;
+        transition: background-color 0.2s;
+    }
+    #submit:hover {
+        background-color: #2868c7;
+        transition: background-color 0.2s;
+    }
+    .home{
+        text-align: center;
+        width: 400px;
+        background-color: #435165;
+        margin: 100px auto;
+    }
+    .home a{
+        font-weight: bold;
+        color: #ffffff;
+    }
+    #warning {
+        display:none;
+        text-align: center;
+        color: #721c24;
+        background-color: #f8d7da;
+        margin: 10px;
+        padding:5px;
+        border-left: 10px solid  #721c24;
+    }
+    #caution {
+        display:none;
+        text-align: center;
+        color: #856404;
+        background-color: #fff3cd;
+        margin: 10px;
+        padding:5px;
+        border-left: 10px solid  #ffeeba;
+    }
+    </style>
+</head>
+<body>
+    <div class="admin">
+        <h1>Input MySql Query</h1>
+        <p id="warning"></p>
+        <p id="caution"></p>
+        <form name="Queryform" ng-submit="query()">
+            
+            <label for="query">
+                <i class="fas fa-user"></i>
+            </label>
+            <input type="text" name="query" ng-model="query" placeholder="put query here ex: INSERT INTO attractions SET `place`= 'CN Tower', `city`='Toronto', `Country`='Canada'; ....." id="query" required>
+            <button id="submit" title="Submit" type="submit">Submit</button>
+        </form>
+    </div>
+    <div class="home">
+        <a href="/">Back to home</a>
+    </div>
+</body>

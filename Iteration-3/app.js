@@ -6,6 +6,10 @@ app.config(function($routeProvider, $locationProvider) {
     templateUrl : 'view/login.html',
     controller : 'LoginController'
 })
+.when('/register', {
+  templateUrl : 'view/register.html',
+  controller : 'RegisterController'
+})
   .when('/', {
       templateUrl : 'view/home.html',
       controller : 'TravelAppDropdownController'
@@ -41,7 +45,7 @@ run.$inject = ['$rootScope', '$location'];
     
       $rootScope.$on('$locationChangeStart', function (event, next, current) {
           // redirect to login page if not logged in and trying to access a restricted page
-          var restrictedPage = $.inArray($location.path(), ['/login']) === -1;
+          var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1;
           var loggedIn = $rootScope.isLoggedIn;
           if (restrictedPage && !loggedIn) {
               $location.path('/login');
@@ -61,6 +65,51 @@ app.factory("checkAuth", function($location,$rootScope){
 });
 
 app.controller('LoginController', function($scope,$location,$rootScope,$sce){
+  $rootScope.isLoggedIn = false;
+  $scope.login = function(){		
+      if ($scope.loginform.$valid) {
+        if($scope.email == 'admin@gmail.com' && $scope.pass == 'admin123')
+        {
+          alert('login successful');
+          $rootScope.isLoggedIn = true;
+          $scope.UserId = $scope.email;
+          $scope.session = $scope.email;
+          $scope.sessionName = 'admin';
+          window.localStorage.setItem("SessionId", $scope.session);
+          window.localStorage.setItem("SessionName", $scope.sessionName);
+          window.localStorage.setItem("isLoggedIn", $scope.isLoggedIn);
+          console.log(window.localStorage);
+          //userDetails.SessionId = $scope.session;
+          $location.path('/');
+
+        }
+        else{
+          $rootScope.isLoggedIn = false;
+          window.localStorage.setItem("isLoggedIn", $rootScope.isLoggedIn);
+          $scope.loginMessage = $sce.trustAsHtml('<i class="fa fa-exclamation-triangle"></i> check your email id and password');
+          console.log($scope.loginMessage);
+        }
+      }
+      
+  }   
+});
+
+app.controller('RegisterController', function($scope,$location,$rootScope,$sce){
+  $rootScope.isRegistered = false;
+  $scope.register = function() {
+    console.log('hello register');
+    if ($scope.registerform.$valid){
+      console.log('hello register valid');
+      console.log($scope);
+      if($scope.username !== null && $scope.fullname !== null && $scope.address !== null && $scope.telnumber !== null && $scope.isadmin !== null && $scope.email !== null && $scope.pass !== null) {
+        console.log('coooool');
+        alert('registration was successful!');
+        $rootScope.isRegistered = true;
+        $location.path('/login');
+      }
+    }
+  }
+
   $rootScope.isLoggedIn = false;
   $scope.login = function(){		
       if ($scope.loginform.$valid) {

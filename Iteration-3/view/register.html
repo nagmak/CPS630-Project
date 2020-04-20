@@ -1,0 +1,76 @@
+
+	
+			<div class="container">
+						
+                <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-12">
+                    <div class="login clearfix">
+                        <h4>Register</h4>    
+                        <form name="registerform" ng-submit="register()">
+                            <div class="content">
+                                <div class="input-group form-group-no-border input-lg">
+                                    <input type="text" name="username" ng-model="username" class="form-control" placeholder="Username..."  required/>
+                                </div>
+                                <div class="alert alert-danger" ng-show="registerform.username.$dirty && registerform.username.$invalid">
+                                      <span ng-show="registerform.username.$error.required">Username is required.</span>
+                                </div>
+                                <div class="input-group form-group-no-border input-lg">
+                                    <input type="text" name="fullname" ng-model="fullname" class="form-control" placeholder="Full Name..."  required/>
+                                </div>
+                                <div class="alert alert-danger" ng-show="registerform.fullname.$dirty && registerform.fullname.$invalid">
+                                      <span ng-show="registerform.fullname.$error.required">Full Name is required.</span>
+                                </div>
+                                <div class="input-group form-group-no-border input-lg">
+                                    <input type="text" name="address" ng-model="address" class="form-control" placeholder="Address..."  required/>
+                                </div>
+                                <div class="alert alert-danger" ng-show="registerform.address.$dirty && registerform.address.$invalid">
+                                      <span ng-show="registerform.address.$error.required">Address is required.</span>
+                                </div>
+                                <div class="input-group form-group-no-border input-lg">
+                                    <input type="number" name="telnumber" ng-model="telnumber" class="form-control" placeholder="Telephone Number..."  required/>
+                                </div>
+                                <div class="alert alert-danger" ng-show="registerform.telnumber.$dirty && registerform.telnumber.$invalid">
+                                      <span ng-show="registerform.telnumber.$error.required">Telephone NUmber is required.</span>
+                                </div>
+                                <div class="input-group form-group-no-border input-lg">
+                                    <input type="number" name="isadmin" ng-model="isadmin" class="form-control" placeholder="Admin..."  required/>
+                                </div>
+                                <div class="alert alert-danger" ng-show="registerform.isadmin.$dirty && registerform.isadmin.$invalid">
+                                      <span ng-show="registerform.isadmin.$error.required">0 for User, 1 for Admin.</span>
+                                </div>
+                                <div class="input-group form-group-no-border input-lg">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-envelope"></i>
+                                    </span>
+                                    <input type="email" name="email" ng-model="email" class="form-control" placeholder="Email..."  required/>
+                                </div>
+                                <div class="alert alert-danger" ng-show="registerform.email.$dirty && registerform.email.$invalid">
+                                      <span ng-show="registerform.email.$error.required">Email is required.</span>
+                                      <span ng-show="registerform.email.$error.email">Invalid email address.</span>
+                                </div>
+                                <div class="input-group form-group-no-border input-lg">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-lock"></i>
+                                    </span>
+                                    <input type="password" name="pass" ng-model="pass" placeholder="Password..." ng-minlength="8" ng-maxlength="15" class="form-control" required/>
+                                </div>
+                                <div class="alert alert-danger" ng-show="registerform.pass.$dirty && registerform.pass.$invalid">
+                                      <span ng-show="registerform.pass.$error.required">Password is required.</span>
+                                    <span ng-if="!registerform.pass.$valid">
+                                        <span ng-show="registerform.pass.$error.minlength">The length is too short.</span>
+                                        <span ng-show="registerform.pass.$error.maxlength">The length is too long.</span>
+                                    </span>
+                                  </div>
+                                <span class="badge" ng-bind-html="loginMessage"></span>
+                            </div>
+                            <div class="footer col-xs-12 text-center">
+                                <button type="submit" class="btn btn-success btn-simple btn-round btn-block" ng-disabled="registerform.$invalid">Register</button>
+                            </div>
+                            <div class="col-xs-12">
+                                <h6 class="text-center">
+                                    <a href="#/login" class="link">Login</a>
+                                </h6>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+    </div>
